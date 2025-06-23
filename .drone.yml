@@ -22,6 +22,10 @@ kind: pipeline
 type: docker
 name: production-build
 
+platform:
+  os: linux
+  arch: arm64
+
 trigger:
   branch:
     - main
@@ -38,6 +42,10 @@ steps:
 kind: pipeline
 type: docker
 name: production-deploy
+
+platform:
+  os: linux
+  arch: arm64
 
 trigger:
   branch:
