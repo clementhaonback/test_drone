@@ -25,6 +25,12 @@ name: production-build
 
 trigger:
   branch:
+    - staging
+  event:
+    - push
+
+trigger:
+  branch:
     - main
   event:
     - push
