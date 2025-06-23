@@ -1,5 +1,5 @@
 kind: pipeline
-type: dockerMore actions
+type: docker
 name: auto-on-staging
 
 platform:
