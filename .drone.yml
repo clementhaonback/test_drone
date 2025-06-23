@@ -1,6 +1,10 @@
 kind: pipeline
-type: docker
-name: staging-automated
+type: dockerMore actions
+name: auto-on-staging
+
+platform:
+  os: linux
+  arch: arm64
 
 trigger:
   branch:
@@ -9,30 +13,7 @@ trigger:
     - push
 
 steps:
-  - name: simulate-staging-deploy
+  - name: test-staging
     image: alpine
     commands:
-      - echo "🚀 Déploiement AUTOMATIQUE sur staging"
-      - echo "Simulation construction de l'application..."
-      - echo "Simulation déploiement sur serveur staging..."
-      - echo "✅ Staging déployé avec succès"
-
----
-kind: pipeline
-type: docker
-name: production-build
-
-trigger:
-  branch:
-    - main
-  event:
-    - push
-
-steps:
-  - name: build
-    image: alpine
-    commands:
-      - echo "🏗️ Construction de l'application pour production"
-      - echo "Compilation des assets..."
-      - echo "Tests de validation..."
-      - echo "✅ Build terminé - Prêt pour déploiement"
+      - echo 'Triggered automatically on staging'
