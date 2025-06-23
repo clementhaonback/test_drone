@@ -1,3 +1,4 @@
+# Pipeline pour le build automatique sur staging
 kind: pipeline
 type: docker
 name: auto-on-staging
@@ -22,7 +23,8 @@ steps:
       - npm run lint
       - npm run build
       - echo "✅ Staging build terminé"
-      
+
+#Premiere étape de build sur production
 ---
 kind: pipeline
 type: docker
@@ -67,11 +69,30 @@ steps:
     depends_on:
       - lint-and-test
 
+#Deuxieme étape de build sur production (envoi sur le registry)
+---
+kind: pipeline
+type: docker
+name: production-deploy
+
+platform:
+  os: linux
+  arch: arm64
+
+trigger:
+  branch:
+    - main
+  event:
+    - promote
+  target:
+    - production
+
+steps:  
   - name: build-and-push
     image: plugins/docker
     settings:
-      registry: localhost:5000
-      repo: localhost:5000/test_drone
+      registry: docker-registry:5000
+      repo: docker-registry:5000/test_drone
       tags: latest
       insecure: true
       context: .
