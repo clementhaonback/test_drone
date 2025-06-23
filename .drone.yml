@@ -20,7 +20,7 @@ steps:
 ---
 kind: pipeline
 type: docker
-name: production-manual
+name: production-build
 
 trigger:
   branch:
@@ -32,11 +32,32 @@ steps:
   - name: build
     image: alpine
     commands:
-      - echo "Build"
+      - echo "🏗️ Construction de l'application pour production"
+      - echo "Compilation des assets..."
+      - echo "Tests de validation..."
+      - echo "✅ Build terminé - Prêt pour déploiement"
 
+---
+kind: pipeline
+type: docker
+name: production-deploy
+
+trigger:
+  branch:
+    - main
+  event:
+    - promote
+  target:
+    - production
+
+steps:
   - name: deploy
     image: alpine
     commands:
-      - echo "Déploiement manuel"
-    when:
-      event: manual  
+      - echo "🚀 Déploiement MANUEL sur production"
+      - echo "Déploiement sur serveur de production..."
+      - echo "Vérification des services..."
+      - echo "✅ Production déployée avec succès"
+
+depends_on:
+  - production-build  
