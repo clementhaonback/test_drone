@@ -96,6 +96,5 @@ steps:
       insecure: true
       context: .
       dockerfile: Dockerfile
-    depends_on:
-      - build-production
+
 
