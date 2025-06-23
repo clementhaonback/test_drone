@@ -13,8 +13,8 @@ steps:
     image: alpine
     commands:
       - echo "🚀 Déploiement AUTOMATIQUE sur staging"
-      - echo "Simulation: construction de l'application..."
-      - echo "Simulation: déploiement sur serveur staging..."
+      - echo "Simulation construction de l'application..."
+      - echo "Simulation déploiement sur serveur staging..."
       - echo "✅ Staging déployé avec succès"
 
 ---
@@ -33,14 +33,14 @@ steps:
     image: alpine
     commands:
       - echo "🏗 Construction pour production"
-      - echo "Simulation: npm install"
-      - echo "Simulation: npm run build"
+      - echo "Simulation npm install"
+      - echo "Simulation npm run build"
 
   - name: deploy-production
     image: alpine
     commands:
-      - echo "🛑 ATTENTION: Ceci déploierait en PRODUCTION"
-      - echo "Simulation: déploiement sur serveurs production..."
+      - echo "🛑 ATTENTIO Ceci déploierait en PRODUCTION"
+      - echo "Simulation déploiement sur serveurs production..."
       - echo "✅ Production déployée"
     when:
       status:
