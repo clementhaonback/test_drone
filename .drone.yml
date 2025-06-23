@@ -6,40 +6,9 @@ platform:
   os: linux
   arch: arm64
 
-trigger:
-  branch:
-    - staging
-  event:
-    - push
-
 steps:
   - name: test-staging
     image: alpine
     commands:
       - echo 'Triggered automatically on staging'
 
----
-kind: pipeline
-type: docker
-name: production-build
-
-trigger:
-  branch:
-    - staging
-  event:
-    - push
-
-trigger:
-  branch:
-    - main
-  event:
-    - push
-
-steps:
-  - name: build
-    image: alpine
-    commands:
-      - echo "🏗️ Construction de l'application pour production"
-      - echo "Compilation des assets..."
-      - echo "Tests de validation..."
-      - echo "✅ Build terminé - Prêt pour déploiement"
