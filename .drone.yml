@@ -10,7 +10,7 @@ trigger:
   branch:
     - main
   event:
-    - manual
+    - promote
 
 steps:
   - name: test-main
