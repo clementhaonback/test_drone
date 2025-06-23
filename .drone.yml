@@ -55,6 +55,8 @@ steps:
       - npm install
       - npm run lint
       - echo "✅ Code vérifié"
+    depends_on:
+      - install-dependencies
 
   - name: build-production
     image: node:18-alpine
