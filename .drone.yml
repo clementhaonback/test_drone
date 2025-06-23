@@ -87,6 +87,15 @@ trigger:
     - production
 
 steps:  
+  - name: rebuild-for-docker
+    image: node:18-alpine
+    commands:
+      - echo "🏗️ Reconstruction pour Docker"
+      - cd test_drone
+      - npm install
+      - npm run build
+      - echo "✅ Reconstruction terminée"
+      
   - name: build-and-push
     image: plugins/docker
     settings:
@@ -96,5 +105,7 @@ steps:
       insecure: true
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      - rebuild-for-docker
 
 
