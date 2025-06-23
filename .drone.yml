@@ -1,13 +1,40 @@
 kind: pipeline
 type: docker
-name: default
+name: auto-on-staging
 
 platform:
   os: linux
   arch: arm64
 
+trigger:
+  branch:
+    - staging
+  event:
+    - push
+
 steps:
-  - name: test
+  - name: test-staging
     image: alpine
     commands:
-      - echo 'Hello Drone'
+      - echo 'Triggered automatically on staging'
+
+
+kind: pipeline
+type: docker
+name: manual-on-main
+
+platform:
+  os: linux
+  arch: arm64
+
+trigger:
+  branch:
+    - main
+  event:
+    - manual
+
+steps:
+  - name: test-main
+    image: alpine
+    commands:
+      - echo 'Triggered manually on main'
