@@ -5,9 +5,53 @@ name: auto-on-staging
 platform:
   os: linux
   arch: arm64
-
+  
+trigger:
+  branch:
+    - staging
+  event:
+    - push
+    
 steps:
   - name: test-staging
     image: alpine
     commands:
       - echo 'Triggered automatically on staging'
+---
+kind: pipeline
+type: docker
+name: production-build
+
+trigger:
+  branch:
+    - main
+  event:
+    - push
+
+steps:
+  - name: build
+    image: alpine
+    commands:
+      - echo "🏗️ Construction de l'application pour production"
+
+---
+kind: pipeline
+type: docker
+name: production-deploy
+
+trigger:
+  branch:
+    - main
+  event:
+    - promote
+  target:
+    - production
+
+steps:
+  - name: deploy
+    image: alpine
+    commands:
+      - echo "🚀 Déploiement MANUEL sur production"
+
+depends_on:
+  - production-build  
