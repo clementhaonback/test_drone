@@ -1,5 +1,5 @@
 kind: pipeline
-type: docker
+type: dockerMore actions
 name: auto-on-staging
 
 platform:
@@ -11,3 +11,4 @@ steps:
     image: alpine
     commands:
       - echo 'Triggered automatically on staging'
+
