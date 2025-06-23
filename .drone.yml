@@ -67,31 +67,15 @@ steps:
     depends_on:
       - lint-and-test
 
----
-kind: pipeline
-type: docker
-name: production-deploy
+  - name: build-and-push
+    image: plugins/docker
+    settings:
+      registry: localhost:5000
+      repo: localhost:5000/test_drone
+      tags: latest
+      insecure: true
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - build-production
 
-platform:
-  os: linux
-  arch: arm64
-
-trigger:
-  branch:
-    - main
-  event:
-    - promote
-  target:
-    - production
-
-steps:
-  - name: deploy
-    image: alpine
-    commands:
-      - echo "🚀 Déploiement MANUEL sur production"
-      - echo "Récupération des artefacts de build..."
-      - echo "Déploiement vers serveur de production..."
-      - echo "✅ Production déployée avec succès"
-
-depends_on:
-  - production-build  
