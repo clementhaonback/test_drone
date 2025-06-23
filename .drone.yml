@@ -18,7 +18,7 @@ steps:
     commands:
       - echo "🚀 Build automatique sur staging"
       - cd test_drone
-      - npm ci
+      - npm install
       - npm run lint
       - npm run build
       - echo "✅ Staging build terminé"
@@ -44,7 +44,7 @@ steps:
     commands:
       - echo "📦 Installation des dépendances"
       - cd test_drone
-      - npm ci
+      - npm install
       - echo "✅ Dépendances installées"
 
   - name: lint-and-test
@@ -52,7 +52,7 @@ steps:
     commands:
       - echo "🔍 Vérification du code"
       - cd test_drone
-      - npm ci
+      - npm install
       - npm run lint
       - echo "✅ Code vérifié"
 
@@ -61,7 +61,7 @@ steps:
     commands:
       - echo "🏗️ Construction de l'application pour production"
       - cd test_drone
-      - npm ci
+      - npm install
       - npm run build
       - echo "✅ Build production terminé"
     depends_on:
