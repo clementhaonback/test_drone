@@ -1,19 +1,49 @@
 kind: pipeline
 type: docker
-name: manual-on-main
+name: staging-automated
 
-platform:
-  os: linux
-  arch: arm64
+trigger:
+  branch:
+    - staging
+  event:
+    - push
+
+steps:
+  - name: simulate-staging-deploy
+    image: alpine
+    commands:
+      - echo "🚀 Déploiement AUTOMATIQUE sur staging"
+      - echo "Simulation: construction de l'application..."
+      - echo "Simulation: déploiement sur serveur staging..."
+      - echo "✅ Staging déployé avec succès"
+
+---
+kind: pipeline
+type: docker
+name: production-manual
 
 trigger:
   branch:
     - main
   event:
-    - promote
+    - push
 
 steps:
-  - name: test-main
+  - name: build-production
     image: alpine
     commands:
-      - echo 'Triggered manually on main'
+      - echo "🏗 Construction pour production"
+      - echo "Simulation: npm install"
+      - echo "Simulation: npm run build"
+
+  - name: deploy-production
+    image: alpine
+    commands:
+      - echo "🛑 ATTENTION: Ceci déploierait en PRODUCTION"
+      - echo "Simulation: déploiement sur serveurs production..."
+      - echo "✅ Production déployée"
+    when:
+      status:
+        - success
+      action:
+        - promote
