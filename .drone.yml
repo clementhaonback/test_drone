@@ -29,21 +29,14 @@ trigger:
     - push
 
 steps:
-  - name: build-production
+  - name: build
     image: alpine
     commands:
-      - echo "🏗 Construction pour production"
-      - echo "Simulation npm install"
-      - echo "Simulation npm run build"
+      - echo "Build"
 
-  - name: deploy-production
+  - name: deploy
     image: alpine
     commands:
-      - echo "🛑 ATTENTIO Ceci déploierait en PRODUCTION"
-      - echo "Simulation déploiement sur serveurs production..."
-      - echo "✅ Production déployée"
+      - echo "Déploiement manuel"
     when:
-      status:
-        - success
-      action:
-        - promote
+      event: manual  
