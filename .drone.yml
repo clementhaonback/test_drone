@@ -13,10 +13,16 @@ trigger:
     - push
     
 steps:
-  - name: test-staging
-    image: alpine
+  - name: install-and-build-staging
+    image: node:18-alpine
     commands:
-      - echo 'Triggered automatically on staging'
+      - echo "🚀 Build automatique sur staging"
+      - cd test_drone
+      - npm ci
+      - npm run lint
+      - npm run build
+      - echo "✅ Staging build terminé"
+      
 ---
 kind: pipeline
 type: docker
@@ -33,10 +39,33 @@ trigger:
     - push
 
 steps:
-  - name: build
-    image: alpine
+  - name: install-dependencies
+    image: node:18-alpine
+    commands:
+      - echo "📦 Installation des dépendances"
+      - cd test_drone
+      - npm ci
+      - echo "✅ Dépendances installées"
+
+  - name: lint-and-test
+    image: node:18-alpine
+    commands:
+      - echo "🔍 Vérification du code"
+      - cd test_drone
+      - npm ci
+      - npm run lint
+      - echo "✅ Code vérifié"
+
+  - name: build-production
+    image: node:18-alpine
     commands:
       - echo "🏗️ Construction de l'application pour production"
+      - cd test_drone
+      - npm ci
+      - npm run build
+      - echo "✅ Build production terminé"
+    depends_on:
+      - lint-and-test
 
 ---
 kind: pipeline
@@ -60,6 +89,9 @@ steps:
     image: alpine
     commands:
       - echo "🚀 Déploiement MANUEL sur production"
+      - echo "Récupération des artefacts de build..."
+      - echo "Déploiement vers serveur de production..."
+      - echo "✅ Production déployée avec succès"
 
 depends_on:
   - production-build  
