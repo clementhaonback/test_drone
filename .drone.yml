@@ -6,12 +6,6 @@ platform:
   os: linux
   arch: arm64
 
-trigger:
-  branch:
-    - staging
-  event:
-    - push
-
 steps:
   - name: test-staging
     image: alpine
