@@ -17,8 +17,7 @@ steps:
     image: alpine
     commands:
       - echo 'Triggered automatically on staging'
-
-
+---
 kind: pipeline
 type: docker
 name: manual-on-main
